@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties("orders.filter")
-public class OrdersFilter {
+public class ConfigurationFile {
 
 	private double pickupDistance;
 	private List<String> boxOnlyDescription;

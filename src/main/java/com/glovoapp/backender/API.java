@@ -1,6 +1,5 @@
 package com.glovoapp.backender;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,12 +47,7 @@ class API {
 	@RequestMapping("/orders/{courierId}")
 	@ResponseBody
 	List<OrderVM> orders(@PathVariable String courierId) {
-
-		try {
-			return ordersService.getFilteredOrders(orderRepository, courierId);
-		} catch (Exception e) {
-			return Collections.emptyList();
-		}
+		return ordersService.getFilteredOrders(orderRepository, courierId);
 	}
 
 	public static void main(String[] args) {
