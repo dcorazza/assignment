@@ -9,41 +9,41 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("orders.filter")
 public class ConfigurationFile {
 
-	private double pickupDistance;
-	private List<String> boxOnlyDescription;
-	private List<String> orderPriority;
-	private double closerPriority;
+    private double orderDistanceFromCourier;
+    private List<String> boxOnlyDescription;
+    private List<String> orderPriority;
+    private double closerPriority;
 
-	public double getPickupDistance() {
-		return pickupDistance;
-	}
+    public List<String> getBoxOnlyDescription() {
+        return boxOnlyDescription;
+    }
 
-	public void setPickupDistance(double pickupDistance) {
-		this.pickupDistance = pickupDistance;
-	}
+    public void setBoxOnlyDescription(List<String> boxOnlyDescription) {
+        this.boxOnlyDescription = boxOnlyDescription;
+    }
 
-	public List<String> getBoxOnlyDescription() {
-		return boxOnlyDescription;
-	}
+    public List<String> getOrderPriority() {
+        return orderPriority;
+    }
 
-	public void setBoxOnlyDescription(List<String> boxOnlyDescription) {
-		this.boxOnlyDescription = boxOnlyDescription;
-	}
+    public void setOrderPriority(List<String> orderPriority) {
+        this.orderPriority = orderPriority;
+    }
 
-	public List<String> getOrderPriority() {
-		return orderPriority;
-	}
+    public double getCloserPriority() {
+        return closerPriority;
+    }
 
-	public void setOrderPriority(List<String> orderPriority) {
-		this.orderPriority = orderPriority;
-	}
+    public void setCloserPriority(double closerPriority) {
+        this.closerPriority = closerPriority;
+    }
 
-	public double getCloserPriority() {
-		return closerPriority;
-	}
+    public double getOrderDistanceFromCourier() {
+        return orderDistanceFromCourier;
+    }
 
-	public void setCloserPriority(double closerPriority) {
-		this.closerPriority = closerPriority;
-	}
+    public void setOrderDistanceFromCourier(double orderDistanceFromCourier) {
+        this.orderDistanceFromCourier = orderDistanceFromCourier;
+    }
 
 }

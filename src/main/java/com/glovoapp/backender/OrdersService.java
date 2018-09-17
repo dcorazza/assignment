@@ -17,8 +17,15 @@ public class OrdersService {
 
 	private final CourierRepository courierRepository;
 
+	/**
+	 *
+	 * @param filter
+	 * @param sort
+	 * @param configuration
+	 * @param courierRepository
+	 */
 	@Autowired
-	public OrdersService(FilterOrder filter, SortOrder sort, ConfigurationFile configuration,
+	OrdersService(FilterOrder filter, SortOrder sort, ConfigurationFile configuration,
 			CourierRepository courierRepository) {
 		super();
 		this.filter = filter;
@@ -35,14 +42,9 @@ public class OrdersService {
 		}
 		List<Order> orders = orderRepository.findAll();
 
-		System.out.println("orders-->" + orders.size());
-
 		orders = filter.filterBoxOnly(courier, orders);
-		System.out.println("Boxonly-->" + orders.size());
 
 		orders = filter.filterByDistance(courier, orders);
-		System.out.println("result-->" + orders.size());
-		orders.forEach(System.out::println);
 
 		orders = sortOrder(courier, orders);
 
@@ -50,6 +52,15 @@ public class OrdersService {
 				.collect(Collectors.toList());
 	}
 
+	/**
+	 * Make sure we can configure the order in which the priorities are applied
+	 * (e.g. we should be able to put VIP before food, or food before close orders
+	 * just by changing the configuration)
+	 * 
+	 * @param courier
+	 * @param orders
+	 * @return
+	 */
 	public List<Order> sortOrder(Courier courier, List<Order> orders) {
 
 		for (String priority : configuration.getOrderPriority()) {
@@ -64,7 +75,6 @@ public class OrdersService {
 				orders = sort.sortFood(orders);
 				break;
 			default:
-				continue;
 			}
 		}
 		return orders;

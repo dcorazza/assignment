@@ -17,6 +17,12 @@ public class SortOrderImpl implements SortOrder {
 		this.configuration = configuration;
 	}
 
+	/**
+	 * Sort orders that are food
+	 * 
+	 * @param orders
+	 * @return
+	 */
 	@Override
 	public List<Order> sortFood(List<Order> orders) {
 		Collections.sort(orders, new Comparator<Order>() {
@@ -28,6 +34,12 @@ public class SortOrderImpl implements SortOrder {
 		return orders;
 	}
 
+	/**
+	 * Sort orders that are that belong to a VIP customer
+	 * 
+	 * @param orders
+	 * @return
+	 */
 	@Override
 	public List<Order> sortVip(List<Order> orders) {
 		Collections.sort(orders, new Comparator<Order>() {
@@ -40,13 +52,20 @@ public class SortOrderImpl implements SortOrder {
 		return orders;
 	}
 
+	/**
+	 * Sort orders that are close to the courier first, in slots of 500 meters (e.g.
+	 * orders closer than 500m have the same priority; same orders between 500 and
+	 * 1000m)
+	 * 
+	 * @param orders
+	 * @param courier
+	 * @return
+	 */
 	@Override
 	public List<Order> sortCloser(List<Order> orders, Courier courier) {
 		orders.sort((o1, o2) -> Double.compare(
 				DistanceCalculatorUtil.calculateCloserDistance(o1, courier, configuration.getCloserPriority()),
 				(DistanceCalculatorUtil.calculateCloserDistance(o2, courier, configuration.getCloserPriority()))));
-		System.out.println("Depois");
-		orders.forEach(System.out::println);
 		return orders;
 
 	}

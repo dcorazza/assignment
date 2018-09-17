@@ -16,32 +16,52 @@ public class FilterOrderImpl implements FilterOrder {
 		this.configuration = configuration;
 	}
 
+	/**
+	 * If the description of the order contains the words pizza, cake or flamingo,
+	 * we can only show the order to the courier if they are equipped with a Glovo
+	 * box.
+	 *
+	 * @param courier
+	 * @param orders
+	 * @return
+	 */
+	@Override
 	public List<Order> filterBoxOnly(Courier courier, List<Order> orders) {
 		List<Order> filtered = new ArrayList<Order>();
-		orders.forEach((Order order) -> {
+		orders.forEach((order) -> {
 			if (configuration.getBoxOnlyDescription().stream().parallel()
 					.anyMatch(s -> order.getDescription().toLowerCase().contains(s.toLowerCase()))) {
-				if (!courier.getBox()) {
-					return;
+				if (courier.getBox()) {
+					filtered.add(order);
 				}
+			} else {
+				filtered.add(order);
 			}
-			filtered.add(order);
 		});
 		return filtered;
 	}
 
+	/**
+	 * If the order is further than 5km to the courier, we will only show it to
+	 * couriers that move in motorcycle or electric scooter.
+	 * 
+	 * @param courier
+	 * @param orders
+	 * @return
+	 */
+	@Override
 	public List<Order> filterByDistance(Courier courier, List<Order> orders) {
 		List<Order> filtered = new ArrayList<Order>();
-		orders.forEach((Order order) -> {
-
+		orders.forEach((order) -> {
 			double totalDistance = DistanceCalculatorUtil.getTotalDistance(courier, order);
-			if (totalDistance > configuration.getPickupDistance()) {
-				if (!courier.getVehicle().equals(Vehicle.ELECTRIC_SCOOTER)
+			if (totalDistance > configuration.getOrderDistanceFromCourier()) {
+				if (courier.getVehicle().equals(Vehicle.ELECTRIC_SCOOTER)
 						&& !courier.getVehicle().equals(Vehicle.MOTORCYCLE)) {
-					return;
+					filtered.add(order);
 				}
+			} else {
+				filtered.add(order);
 			}
-			filtered.add(order);
 		});
 		return filtered;
 	}
