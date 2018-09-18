@@ -47,6 +47,7 @@ public class OrdersService {
 		orders = filter.filterByDistance(courier, orders);
 
 		orders = sortOrder(courier, orders);
+		orders.forEach(System.out::println);
 
 		return orders.stream().map(order -> new OrderVM(order.getId(), order.getDescription()))
 				.collect(Collectors.toList());
